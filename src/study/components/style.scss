@@ -1,0 +1,14 @@
+[aria-selected=true] {
+  background: #1890ff;
+  > * {
+    color: #fff;
+  }
+}
+
+[aria-selected=false]:hover {
+  background: rgba(0, 0, 0, 0.1)
+}
+
+.ant-table-body {
+  overflow: auto!important;
+}

@@ -1,0 +1,31 @@
+.answer-sheet {
+  border: 1px solid #d3d7d4;
+  border-radius: 4px;
+  overflow: hidden;
+  h4 {
+    padding: 8px 12px;
+    border-bottom: 1px solid #d3d7d4;
+    margin: 0;
+    font-weight: bold;
+  }
+  .body {
+    padding: 8px;
+    > span {
+      width: 46px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4px;
+      border-radius: 4px;
+      &.answered {
+        background: #7bbfea;
+        color: #fff;
+      }
+      &.unanswered {
+        background: #d3d7d4;
+        color: #fff;
+      }
+    }
+  }
+}

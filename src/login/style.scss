@@ -1,0 +1,23 @@
+body {
+  background-image: url('/assets/login.bg.jpg');
+  background-size: cover;
+  overflow: hidden;
+}
+
+.login-card {
+  background: #fff;
+  width: 300px;
+  height: 400px;
+  margin: 200px auto;
+  padding: 20px;
+  background-image: linear-gradient(#fff, #f0f0f3);
+  border-radius: 2px;
+  h2 {
+    margin-top: 12px;
+    color: #224b8f;
+  }
+}
+
+button {
+  line-height: 1;
+}

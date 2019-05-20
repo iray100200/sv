@@ -1,0 +1,40 @@
+.ant-layout-content {
+  overflow: hidden!important;
+}
+
+.books-context {
+  position: relative;
+  height: calc(100vh - 116px);
+  .left-tree {
+    min-width: 280px;
+    padding: 20px 20px 24px 20px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+    position: relative;
+    .ant-tree.ant-tree-directory {
+      display: inline-block;
+    }
+  }
+  .md {
+    font-size: initial;
+    overflow: auto;
+    padding: 20px 32px;
+    background: #fff;
+  }
+}
+
+.ant-tree.ant-tree-show-line li span.ant-tree-switcher {
+  background: #d3d7d4;
+  color: #fff;
+}
+
+.ant-tree.ant-tree-directory > li.ant-tree-treenode-selected > span.ant-tree-node-content-wrapper::before, .ant-tree.ant-tree-directory .ant-tree-child-tree > li.ant-tree-treenode-selected > span.ant-tree-node-content-wrapper::before {
+  background: #74787c;
+}
+
+.ant-tree-title {
+  font-size: 13px;
+}
+
+.ant-tree > li:first-child {
+  padding: 0;
+}

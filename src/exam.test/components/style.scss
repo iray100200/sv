@@ -1,0 +1,32 @@
+.exam-test {
+  display: flex;
+  .time-count {
+    padding-left: 20px;
+    width: 364px;
+    height: 100vh;
+    border-left: 1px solid #eee;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: gray;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+}
+::-webkit-scrollbar-track {           
+  background-color: transparent;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track-piece {           
+  background-color: #dedede;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {          
+  background-color: gray;
+  border-radius: 4px;
+}

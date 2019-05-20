@@ -1,0 +1,29 @@
+.cards {
+  margin: -10px;
+  overflow: hidden;
+  > * {
+    flex: 1;
+    margin: 10px;
+  }
+}
+
+.ant-modal-content {
+  border-radius: 2px;
+  .ant-modal-close-x {
+    height: 43px;
+    width: 43px;
+    line-height: 44px;
+  }
+  .ant-modal-header {
+    padding: 12px 20px 11px;
+  }
+  .ant-modal-body {
+    overflow: hidden;
+    padding: 20px;
+    iframe {
+      border: 0;
+      height: 100%;
+      width: 100%;
+    }
+  }
+}

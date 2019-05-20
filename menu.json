@@ -1,0 +1,44 @@
+[
+  {
+    "key": "study",
+    "href": "/study",
+    "icon": "home",
+    "title": "学习中心"
+  },
+  {
+    "key": "videos",
+    "href": "/videos",
+    "icon": "play-circle",
+    "title": "在线视频"
+  },
+  {
+    "key": "exam",
+    "href": "/exam",
+    "icon": "cloud",
+    "title": "在线考试"
+  },
+  {
+    "key": "forum",
+    "href": "/forum",
+    "icon": "bulb",
+    "title": "PC 社区"
+  },
+  {
+    "key": "survey",
+    "href": "/survey",
+    "icon": "team",
+    "title": "调查问卷"
+  },
+  {
+    "key": "books",
+    "href": "/books",
+    "icon": "book",
+    "title": "电子丛书"
+  },
+  {
+    "key": "knowledge",
+    "href": "/knowledge",
+    "icon": "read",
+    "title": "知识库"
+  }
+]

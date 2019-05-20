@@ -1,0 +1,9 @@
+.cornor {
+  border-radius: 4px;
+  &.circle {
+    border-radius: 50%;
+  }
+  &.rect {
+    border-radius: 0;
+  }
+}

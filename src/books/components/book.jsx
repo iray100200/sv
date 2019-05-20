@@ -1,0 +1,98 @@
+import React, { Component } from 'react'
+import { Document, Page } from 'react-pdf/dist/entry.webpack'
+import { Icon, Spin } from 'antd'
+import 'react-pdf/dist/Page/AnnotationLayer.css'
+
+import './book.less'
+
+const antIcon = <Icon type="loading" style={ { fontSize: 24 } } spin />
+
+const options = {
+  cMapUrl: 'cmaps/',
+  cMapPacked: true,
+}
+
+export default class Book extends Component {
+  state = {
+    numPages: null,
+    zoomLevel: 1,
+    loading: true
+  }
+  onFileChange = (event) => {
+    this.setState({
+      file: event.target.files[0],
+      loading: true
+    })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.url !== this.props.url) {
+      this.setState({
+        loading: true
+      })
+    }
+  }
+
+  onDocumentLoadSuccess = ({ numPages }) => {
+    this.setState({
+      numPages,
+      loading: false
+    })
+  }
+
+  handleZoomOut = () => {
+    let { zoomLevel } = this.state
+    let newZoomLevel = zoomLevel + 0.2
+    if (newZoomLevel <= 2) {
+      this.setState({
+        zoomLevel: newZoomLevel
+      })
+    }
+  }
+
+  handleZoomIn = () => {
+    let { zoomLevel } = this.state
+    let newZoomLevel = zoomLevel - 0.2
+    if (newZoomLevel >= 1) {
+      this.setState({
+        zoomLevel: newZoomLevel
+      })
+    }
+  }
+
+  render() {
+    const { numPages, loading } = this.state
+    const { url } = this.props
+    if (!url) return null
+    return (
+      <div className="book__container__document">
+        <Spin indicator={ antIcon } spinning={ loading }>
+          <Document
+            loading={ false }
+            renderMode="svg"
+            file={ `http://47.96.129.81:9091${url}` }
+            onLoadSuccess={ this.onDocumentLoadSuccess }
+            options={ options }
+          >
+            {
+              Array.from(
+                new Array(numPages),
+                (el, index) => (
+                  <Page
+                    scale={ 1 * this.state.zoomLevel }
+                    key={ `page_${index + 1}` }
+                    pageNumber={ index + 1 }
+                  />
+                ),
+              )
+            }
+          </Document>
+        </Spin>
+        <div className="tool-bar">
+          <Icon type="plus" onClick={ this.handleZoomOut } />
+          <Icon type="minus" onClick={ this.handleZoomIn } />
+        </div>
+      </div>
+    )
+  }
+}

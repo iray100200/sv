@@ -1,0 +1,39 @@
+.ant-layout-content {
+  background: #fff;
+  
+  .context {
+    padding: 24px 0;
+    margin: auto;
+    width: 760px;
+    > * {
+      padding: 10px 0;
+    }
+    > h1 {
+      font-size: 28px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    > time {
+      color: #acacac;
+      font-size: 14px;
+    }
+    > .content {
+      font-size: 16px;
+      h1, h2, h3, h4, h5, ul, p {
+        margin: 12px 0;
+      }
+    }
+  }
+}
+
+.comments-context {
+  padding-bottom: 30px;
+  margin: auto;
+  width: 760px;
+  border-top: 1px solid #efeeee;
+  .comment-box {
+    .ant-comment-avatar {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,59 @@
+.ant-layout-content {
+  overflow: hidden!important;
+}
+
+.books-context {
+  height: calc(100vh - 116px);
+  position: relative;
+  .left-tree {
+    padding: 20px 20px 24px 20px;
+    width: 280px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+    .ant-tree.ant-tree-directory {
+      display: inline-block;
+    }
+  }
+  .welcome {
+    width: 100%;
+    overflow: auto;
+    position: relative;
+    background: rgba(82, 86, 89, 0.2);
+    flex: 1;
+    input {
+      padding-left: 16px;
+    }
+  }
+  .document-context {
+    font-size: initial;
+    background: rgb(82, 86, 89);
+    overflow: auto;
+    position: relative;
+  }
+}
+
+.ant-tree.ant-tree-show-line li span.ant-tree-switcher {
+  background: #d3d7d4;
+  color: #fff;
+}
+
+.ant-tree.ant-tree-directory > li.ant-tree-treenode-selected > span.ant-tree-node-content-wrapper::before, .ant-tree.ant-tree-directory .ant-tree-child-tree > li.ant-tree-treenode-selected > span.ant-tree-node-content-wrapper::before {
+  background: #74787c;
+}
+
+.ant-spin-nested-loading {
+  position: static;
+  height: 100%;
+  .ant-spin-container {
+    height: 100%;
+  }
+}
+
+.ant-spin-nested-loading>div>.ant-spin {
+  bottom: 0;
+  max-height: none;
+  height: auto;
+}
+
+.ant-tree > li:first-child {
+  padding: 0;
+}

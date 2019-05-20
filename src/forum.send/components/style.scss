@@ -1,0 +1,21 @@
+.ql-editor {
+  background: #fff;
+  min-height: 400px;
+}
+
+[contenteditable=true] {
+  outline: none;
+  padding: 0 1px 4px;
+}
+
+[contenteditable=true]:empty:before {
+  content: attr(placeholder);
+  display: block;
+  color: #a1a3a6;
+  font-weight: 200;
+}
+
+.content-input {
+  padding-bottom: 8px;
+  border-bottom: 1px solid #d3d7d4;
+}

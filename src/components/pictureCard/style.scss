@@ -1,0 +1,67 @@
+.picture-card {
+  display: inline-block;
+  max-width: 300px;
+  min-width: 240px;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  transform: scale(1);
+  transition: 0.2s transform;
+  will-change: transform;
+  &:hover {
+    transform: scale(1.06);
+  }
+  .picture {
+    width: 100%;
+    padding: 30% 0;
+    background-color: black;
+  }
+  .content {
+    padding: 0 16px;
+    line-height: 44px;
+    height: 44px;
+    background: #fff;
+    label {
+      font-size: 12px;
+    }
+  }
+  &.ver {
+    display: inline-flex;
+    width: 100%;
+    max-width: none;
+    .picture {
+      flex: 3;
+      padding: 14% 0;
+    }
+    .content {
+      flex: 4;
+      padding: 12px 12px 0 16px;
+      line-height: 1.5;
+      height: auto;
+      display: flex;
+      label {
+        word-break: break-all;
+      }
+    }
+  }
+}
+
+.picture-cards-container {
+  min-width: 1200px;
+  margin: -10px;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  &.ver {
+    margin: -6px;
+    flex-direction: column;
+    min-width: 0;
+    > .picture-card {
+      margin: 6px;
+    }
+  }
+  > .picture-card {
+    margin: 10px;
+    flex: 1;
+  }
+}

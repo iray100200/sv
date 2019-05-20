@@ -1,0 +1,17 @@
+.head {
+  position: relative;
+  z-index: 10;
+  background-color: #fff;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+  .ant-page-header-title-view-title {
+    font-size: 18px;
+    font-weight: normal;
+    padding-right: 20px;
+  }
+  .input-search {
+    input {
+      box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+      border: 0;
+    }
+  }
+}
