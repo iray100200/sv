@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { Document, Page } from 'react-pdf/dist/entry.webpack'
-import { Icon, Spin } from 'antd'
+import { Icon, Spin, Empty } from 'antd'
 import 'react-pdf/dist/Page/AnnotationLayer.css'
 
 import './book.less'
 
-const antIcon = <Icon type="loading" style={ { fontSize: 24 } } spin />
+const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />
 
 const options = {
   cMapUrl: 'cmaps/',
@@ -16,7 +16,8 @@ export default class Book extends Component {
   state = {
     numPages: null,
     zoomLevel: 1,
-    loading: true
+    loading: true,
+    failed: false
   }
   onFileChange = (event) => {
     this.setState({
@@ -28,7 +29,8 @@ export default class Book extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.url !== this.props.url) {
       this.setState({
-        loading: true
+        loading: true,
+        numPages: null
       })
     }
   }
@@ -36,7 +38,8 @@ export default class Book extends Component {
   onDocumentLoadSuccess = ({ numPages }) => {
     this.setState({
       numPages,
-      loading: false
+      loading: false,
+      failed: false
     })
   }
 
@@ -60,38 +63,51 @@ export default class Book extends Component {
     }
   }
 
+  handleDocumentLoadError = () => {
+    this.setState({
+      numPages: 0,
+      loading: false,
+      failed: true
+    })
+  }
+
   render() {
-    const { numPages, loading } = this.state
+    const { numPages, loading, failed } = this.state
     const { url } = this.props
     if (!url) return null
     return (
       <div className="book__container__document">
-        <Spin indicator={ antIcon } spinning={ loading }>
+        <Spin indicator={antIcon} spinning={loading}>
           <Document
-            loading={ false }
+            error={<Empty style={{ marginTop: 40 }} description="获取失败" />}
+            loading={loading}
             renderMode="svg"
-            file={ `http://47.96.129.81:9091${url}` }
-            onLoadSuccess={ this.onDocumentLoadSuccess }
-            options={ options }
+            file={url}
+            onLoadError={this.handleDocumentLoadError}
+            onLoadSuccess={this.onDocumentLoadSuccess}
+            options={options}
           >
             {
               Array.from(
                 new Array(numPages),
                 (el, index) => (
                   <Page
-                    scale={ 1 * this.state.zoomLevel }
-                    key={ `page_${index + 1}` }
-                    pageNumber={ index + 1 }
+                    scale={1 * this.state.zoomLevel}
+                    key={`page_${index + 1}`}
+                    pageNumber={index + 1}
                   />
                 ),
               )
             }
           </Document>
         </Spin>
-        <div className="tool-bar">
-          <Icon type="plus" onClick={ this.handleZoomOut } />
-          <Icon type="minus" onClick={ this.handleZoomIn } />
-        </div>
+        {
+          !failed &&
+          <div className="tool-bar">
+            <Icon type="plus" onClick={this.handleZoomOut} />
+            <Icon type="minus" onClick={this.handleZoomIn} />
+          </div>
+        }
       </div>
     )
   }

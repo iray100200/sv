@@ -2,7 +2,7 @@ import * as videojs from 'video.js'
 import * as contextMenu from 'videojs-contextmenu'
 import 'video.js/dist/video-js.min.css'
 
-export function initPlayer() {
+export function initPlayer(currentTime, enableDrag) {
   videojs.default.addLanguage('zh-CN', {
     "Play": "播放",
     "Pause": "暂停",
@@ -88,15 +88,15 @@ export function initPlayer() {
   });
 
   var player = videojs.default('video', {
-    controlBar: {
-
-    }
+    controlBar: {},
+    autoplay: true
   })
-  player.controlBar.progressControl.disable()
+  if (!enableDrag) {
+    player.controlBar.progressControl.disable()
+  }
   player.ready(function () {
-    var player = this
-    player.controls = false
-    player.play()
     player.contextmenu()
+    player.currentTime(Math.max(currentTime - 2, 0))
   })
+  return player
 }

@@ -4,7 +4,7 @@ body {
 
 .head {
   width: 100%;
-  padding: 9%;
+  padding: 7.8%;
   background-image: url('/assets/forum.bg2.jpg');
   background-size: 100% auto;
   background-repeat: no-repeat;
@@ -16,7 +16,7 @@ body {
     right: 0;
     top: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.55);
     .links {
       padding: 8px;
       color: #fff;
@@ -45,9 +45,19 @@ body {
     }
     .forum-btns {
       position: absolute;
-      top: 9px;
+      top: 20px;
+      left: 20px;
       right: 20px;
       line-height: 1;
+      .btns {
+        text-align: right;
+      }
+      .more-info {
+        flex: 1;
+        text-align: left;
+        color: #808080;
+        line-height: 24px;
+      }
       button, input {
         border-radius: 0;
         height: 36px;
@@ -57,17 +67,22 @@ body {
         color: #ccc;
         line-height: 1;
         padding-top: 4px;
-        border: 1px solid rgba(180, 180, 180, 0.2);
+        border: 1px solid rgba(180, 180, 180, 0.4);
       }
     }
   }
 }
 
 .forum-context {
-  padding: 20px 36% 20px 6%;
+  padding: 20px 32% 20px 6%;
+  min-width: 1200px;
   background: #fffffb;
   > * {
     width: 100%;
+  }
+  .ant-avatar {
+    background: transparent;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -118,11 +133,14 @@ body {
   align-items: center;
   color: #a1a3a6;
   > label {
-    background: #f6f5ec;
     padding: 4px;
     border-radius: 4px;
     line-height: 1;
-    min-width: 30px;
+    min-width: 32px;
+    max-width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     text-align: center;
     font-size: 11px;
   }
@@ -130,9 +148,6 @@ body {
 
 .ant-list-sm .ant-list-item {
   overflow: hidden;
-  .ant-list-item-meta-avatar {
-    margin-top: 2px;
-  }
   .ant-list-item-meta {
     overflow: hidden;
     .ant-list-item-meta-content {
@@ -154,15 +169,15 @@ body {
     margin: 0;
     font-size: 16px;
     > *:not(:hover) {
-      color: black;
+      color: #464547;
     }
   }
 }
 
 .ant-avatar {
-  width: 36px;
-  height: 36px;
-  line-height: 36px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
 }
 
 .time-tag {

@@ -6,7 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const package = require("./package.json")
 const _ = require('lodash')
-// const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 // const webpack = require('webpack')
 // const ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -117,6 +117,14 @@ module.exports = {
     ]
   },
   plugins: [
+    ..._.map(enrties, (obj, key) => {
+      return new HtmlWebpackPlugin({
+        filename: key.replace(/\./g, '/') + '.html',
+        template: 'index.html',
+        chunks: [key],
+        inject: true
+      })
+    }),
     new CopyWebpackPlugin([
       { from: 'assets/**/*', to: 'assets/[name].[ext]' },
       { from: 'node_modules/pdfjs-dist/cmaps/', to: 'cmaps/' }

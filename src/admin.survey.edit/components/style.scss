@@ -1,0 +1,46 @@
+@import '../../survey/components/style.scss';
+
+.flex.context {
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  .left {
+    overflow: auto;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 3;
+  }
+  .preview {
+    flex: 1;
+    background: #e3e3e8;
+    overflow: auto;
+  }
+}
+
+.ant-form-item {
+  margin-bottom: 12px;
+}
+
+.ant-collapse>.ant-collapse-item>.ant-collapse-header {
+  background: #f7f7f7;
+  border-radius: 4px;
+}
+
+.ant-collapse-content>.ant-collapse-content-box {
+  padding: 0;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background: #e6e7e7;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #808080;
+}

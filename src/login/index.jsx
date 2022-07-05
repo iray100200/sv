@@ -33,12 +33,19 @@ class Page extends Component {
     }
     login(account, password).then(res => {
       if (res.code === 0) {
+        document.cookie = `token=${res.token}`
         if (rememberme) {
-          var date = new Date()
-          date.setDate(date.getDate() + 20)
-          document.cookie = escape(`username=${account}^token=${res.token}^expires=${date.toGMTString()}`)
+          localStorage.setItem('token', res.token)
+          sessionStorage.removeItem('token')
+        } else {
+          localStorage.removeItem('token')
+          sessionStorage.setItem('token', res.token)
         }
-        localStorage.setItem('token', res.token)
+        document.cookie = `expires=${rememberme ? (() => {
+          var date = new Date()
+          date.setTime(date.getTime() + 30 * 24 * 60 * 60 * 1000)
+          return date.toGMTString()
+        })() : '0'}`
         location.href = '/study'
       } else {
         message.error('用户名或密码错误')
@@ -49,41 +56,46 @@ class Page extends Component {
     let { rememberme, account, password } = this.state
     return <div className="login-card">
       <form autocomplete='off' action="/login">
-        <h2><Icon type="safety-certificate" style={ { position: 'relative', top: 1 } } /> 账号登录</h2>
-        <br />
-        <p>
-          <Input
-            value={ account }
-            onChange={ e => {
+        <div className="logo-context">
+          <img height="56" src="/assets/logo.jpg" />
+        </div>
+        <div style={{ padding: 24 }} className="content">
+          <h2>
+            <Icon type="safety-certificate" style={{ position: 'relative', top: 1 }} /> 账号登录</h2>
+          <p>
+            <Input
+              value={account}
+              onChange={e => {
+                this.setState({
+                  account: e.currentTarget.value
+                })
+              }}
+              placeholder="请输入账号"
+              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            />
+          </p>
+          <p>
+            <Input
+              prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              type="password"
+              placeholder="请输入密码"
+              onChange={e => {
+                this.setState({
+                  password: e.currentTarget.value
+                })
+              }} />
+          </p>
+          <p>
+            <Checkbox checked={rememberme} onChange={e => {
               this.setState({
-                account: e.currentTarget.value
+                rememberme: e.target.checked
               })
-            } }
-            placeholder="请输入账号"
-            prefix={ <Icon type="user" style={ { color: 'rgba(0,0,0,.25)' } } /> }
-          />
-        </p>
-        <p>
-          <Input
-            prefix={ <Icon type="lock" style={ { color: 'rgba(0,0,0,.25)' } } /> }
-            type="password"
-            placeholder="请输入密码"
-            onChange={ e => {
-              this.setState({
-                password: e.currentTarget.value
-              })
-            } } />
-        </p>
-        <p>
-          <Button type="primary" onClick={ this.login } style={ { width: '100%' } }>登录</Button>
-        </p>
-        <p>
-          <Checkbox checked={ rememberme } onChange={ e => {
-            this.setState({
-              rememberme: e.target.checked
-            })
-          } }>记住我的登陆凭证</Checkbox>
-        </p>
+            }}>记住我的登陆凭证</Checkbox>
+          </p>
+          <p>
+            <Button type="primary" onClick={this.login} style={{ width: '100%' }}>登录</Button>
+          </p>
+        </div>
       </form>
     </div>
   }

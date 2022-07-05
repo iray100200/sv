@@ -5,7 +5,8 @@ import './style.scss'
 
 export default class Head extends Component {
   render() {
-    return <div className="head">
+    const { background } = this.props
+    return <div className="head" style={{ background }}>
       <PageHeader { ...this.props } />
     </div>
   }

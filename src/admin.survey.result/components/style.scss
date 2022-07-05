@@ -1,0 +1,37 @@
+span.recharts-legend-item-text {
+  font-size: 13px;
+}
+
+.context {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 12px;
+  > * {
+    width: calc(50% - 24px);
+    margin: 12px;
+  }
+}
+
+.ant-list-bordered {
+  border-color: #e8e8e8;
+}
+
+.ant-list-items {
+  height: 280px;
+  overflow: auto;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background: #e6e7e7;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #808080;
+}

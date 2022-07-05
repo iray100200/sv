@@ -1,0 +1,47 @@
+.mv-list {
+  padding: 0;
+  margin: -12px 0 0;
+  margin-right: -12px;
+  display: flex;
+  flex-wrap: wrap;
+  .mv-item {
+    width: calc(50% - 12px);
+    list-style: none;
+    margin: 12px 12px 0 0;
+    padding: 10px;
+    background: #fff;
+    border-radius: 2px;
+    transition: 0.2s all;
+    &:hover {
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      .mv-img {
+        background-size: 125% auto;
+      }
+    }
+    .mv-img {
+      transition: 0.2s all;
+      width: 228px;
+      height: 140px;
+      border-radius: 2px;
+      background-size: 100% auto;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .mv-context {
+      line-height: 1.6;
+      position: relative;
+      overflow: hidden;
+      .mv-footer {
+        position: absolute;
+        bottom: 0;
+        width: 99%;
+      }
+      .ellipsis {
+        white-space: nowrap;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}

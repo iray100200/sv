@@ -1,9 +1,12 @@
 .exam-test {
   display: flex;
+  overflow: hidden;
+  padding: 20px;
+  height: 100vh;
   .time-count {
+    overflow: auto;
     padding-left: 20px;
     width: 364px;
-    height: 100vh;
     border-left: 1px solid #eee;
   }
 }

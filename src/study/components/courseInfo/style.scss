@@ -1,0 +1,28 @@
+.course-drawer {
+  .ant-drawer-body {
+    padding: 4px;
+    background: #333;
+    .context {
+      height: calc(100vh - 8px);
+      border-radius: 4px;
+      overflow: auto;
+      .w-img {
+        padding: 30%;
+        background-position: center;
+        background-size: cover;
+        margin: 6px;
+        border-radius: 4px;
+        background-color: #130c0e;
+      }
+      .content {
+        flex: 1;
+        background: linear-gradient(#333, #130c0e);
+        padding: 0 20px;
+      }
+    }
+  }
+}
+
+.w100 {
+  width: 100%;
+}

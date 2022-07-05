@@ -6,23 +6,37 @@
   overflow: hidden;
   cursor: pointer;
   transform: scale(1);
-  transition: 0.2s transform;
-  will-change: transform;
+  background: #fff;
   &:hover {
-    transform: scale(1.06);
+    .picture {
+      background-size: 120% auto;
+    }
   }
   .picture {
-    width: 100%;
-    padding: 30% 0;
+    transition: 0.2s all;
+    padding: 26% 0;
     background-color: black;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 10px 10px 0;
   }
   .content {
-    padding: 0 16px;
+    padding: 0;
     line-height: 44px;
     height: 44px;
     background: #fff;
+    h4 {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left;
+      margin-right: 20px;
+      padding: 0 12px;
+    }
     label {
       font-size: 12px;
+      display: inline-block;
     }
   }
   &.ver {
@@ -48,7 +62,7 @@
 
 .picture-cards-container {
   min-width: 1200px;
-  margin: -10px;
+  margin: -6px;
   overflow: hidden;
   display: flex;
   flex-wrap: wrap;
@@ -61,7 +75,7 @@
     }
   }
   > .picture-card {
-    margin: 10px;
+    margin: 6px;
     flex: 1;
   }
 }

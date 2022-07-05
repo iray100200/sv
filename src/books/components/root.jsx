@@ -6,6 +6,7 @@ import { Tree, Input, Icon, AutoComplete } from 'antd'
 import Book from './book'
 import PageHeader from 'components/head'
 import _ from 'lodash'
+import Search from 'components/search'
 
 import './style.scss'
 
@@ -33,20 +34,21 @@ class Root extends Component {
     })
   }
   bookList = []
+  searchKey = ''
   traverseNodes = (nodes) => {
     return nodes.map(o => {
       const hasUrl = o.url !== void (0)
       if (o.bookList) {
         this.bookList = _.uniqBy(this.bookList.concat(o), 'bookTypeId')
-        return <Tree.TreeNode origin={ o } title={ o.bookTypeName } url={ o.url } selectable={ hasUrl } isLeaf={ hasUrl } key={ o.bookTypeId } dataRef={ o }>
+        return <Tree.TreeNode origin={o} title={o.bookTypeName} url={o.url} selectable={hasUrl} isLeaf={hasUrl} key={o.bookTypeId} dataRef={o}>
           {
             o.bookList.map(o => {
-              return <Tree.TreeNode origin={ o } title={ o.bookName } url={ o.bookUrl } selectable={ true } isLeaf={ true } key={ o.id } dataRef={ o }></Tree.TreeNode>
+              return <Tree.TreeNode icon={<Icon type="link" />} origin={o} title={<a>{o.bookName}</a>} url={o.bookUrl} selectable={true} isLeaf={true} key={o.id} dataRef={o}></Tree.TreeNode>
             })
           }
         </Tree.TreeNode>
       }
-      return <Tree.TreeNode origin={ o } title={ o.bookTypeName } url={ o.url } selectable={ hasUrl } isLeaf={ hasUrl } key={ o.bookTypeId } dataRef={ o }>
+      return <Tree.TreeNode origin={o} title={o.bookTypeName} selectable={false} key={o.bookTypeId} dataRef={o}>
         {
           o.bookTypeList && this.traverseNodes(o.bookTypeList)
         }
@@ -54,7 +56,7 @@ class Root extends Component {
     })
   }
   handleSelect = obj => {
-    let url = _.flattenDeep(this.bookList.map(o => o.bookList)).find(o => o.id === obj[0]).bookUrl.split('|')[1]
+    let url = _.flattenDeep(this.bookList.map(o => o.bookList)).find(o => o.id === obj[0]).bookUrl
     this.setState({
       url: url,
       welcome: false,
@@ -62,19 +64,31 @@ class Root extends Component {
     })
   }
   handleSearchChange = obj => {
-    const id = obj.split('|')[0]
+    const id = obj
     let parentId = this.bookList.find(o => o.bookList.some(o => o.id === id)).bookTypeId
+    let target = _.flatten(this.bookList.map(o => o.bookList)).find(o => o.id === id)
     this.setState({
-      url: obj.split('|')[1],
+      url: target && target.bookUrl,
       welcome: false,
       selectedKeys: [id],
       expandedKeys: [parentId]
     })
   }
-  handleSearch = value => {
-    this.bookList
+  handleSearch = e => {
+    let value = e.target.value
+    this.searchKey = value
+    this.setState({
+      bookList: this.stateBookList
+    })
   }
   handleAutoComplete = () => {
+    this.searchKey = ''
+    this.setState({
+      bookList: this.stateBookList
+    })
+  }
+  get stateBookList() {
+    let { searchKey } = this
     let p = this.bookList.map(o => {
       return {
         title: o.bookTypeName,
@@ -87,18 +101,23 @@ class Root extends Component {
           }
         })
       }
+    }).map(o => {
+      o.children = o.children.filter(o => {
+        return o.title.toLowerCase().indexOf(searchKey) > -1
+      })
+      return o
+    }).filter(o => {
+      return o.children.length > 0
     })
-    this.setState({
-      bookList: p.map(group => (
-        <OptGroup key={ group.bookTypeId } label={ <b>{ group.title }</b> }>
-          { group.children.map((opt, i) => (
-            <Option key={ opt.key } value={ opt.key + opt.url }>
-              { opt.title }
-            </Option>
-          )) }
-        </OptGroup>
-      ))
-    })
+    return p.map(group => (
+      <OptGroup key={group.key} label={<b>{group.title}</b>}>
+        {group.children.map((opt, i) => (
+          <Option key={opt.key} value={opt.key}>
+            {opt.title}
+          </Option>
+        ))}
+      </OptGroup>
+    ))
   }
   handleExpand = (keys) => {
     this.setState({
@@ -106,19 +125,27 @@ class Root extends Component {
     })
   }
   render() {
-    const { bookTypes } = this.props
     return <Layout current="books" fullScreen>
-      <PageHeader backIcon={ <Icon type="book" style={ { fontSize: 16, color: 'rgba(0,0,0,.65)' } } /> } onBack={ () => null } title="电子丛书" subTitle={ <Input.Search className="input-search" style={ { width: 260 } } placeholder="搜索文档" onChange={ this.onChange } /> } />
+      <PageHeader backIcon={<Icon type="book" style={{ fontSize: 16, color: 'rgba(0,0,0,.65)' }} />} onBack={() => null} title="电子丛书" subTitle={(
+        <Search
+          onSelect={this.handleSearchChange}
+          placeholder="搜索技术文档"
+          onInput={this.handleSearch}
+          className="input-search"
+          onFocus={this.handleAutoComplete} dataSource={this.state.bookList}
+          style={{ width: 280 }} />)} />
       <div className="flex books-context">
-        <div style={ { display: 'block' } } className="left-tree">
+        <div style={{ display: 'block' }} className="left-tree">
           <Tree.DirectoryTree
-            selectedKeys={ this.state.selectedKeys }
-            onExpand={ this.handleExpand }
+            showIcon
+            selectedKeys={this.state.selectedKeys}
+            onExpand={this.handleExpand}
             autoExpandParent
-            defaultExpandAll={ true }
+            defaultExpandParent={true}
+            defaultExpandAll={true}
             showLine
-            onSelect={ this.handleSelect }
-            expandedKeys={ this.state.expandedKeys }
+            onSelect={this.handleSelect}
+            expandedKeys={this.state.expandedKeys}
           >
             {
               this.state.traverseNodes
@@ -127,19 +154,14 @@ class Root extends Component {
         </div>
         {
           this.state.welcome ? <div className="welcome flex center">
-            <AutoComplete
-              size="large"
-              onSelect={ this.handleSearchChange }
-              style={ { width: '40%', marginBottom: '30%' } }
-              onFocus={ this.handleAutoComplete } dataSource={ this.state.bookList }>
-              <Input.Search
-                placeholder="搜索技术文档"
-                size="large"
-                onSearch={ this.handleSearch }
-              />
-            </AutoComplete>
+            <Search size="large"
+              onSelect={this.handleSearchChange}
+              placeholder="搜索技术文档"
+              onInput={this.handleSearch}
+              onFocus={this.handleAutoComplete} dataSource={this.state.bookList}
+              style={{ width: '40%', marginBottom: '30%' }} />
           </div> : <div className="auto document-context">
-              <Book url={ this.state.url } />
+              <Book url={this.state.url} />
             </div>
         }
       </div>

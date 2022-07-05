@@ -1,9 +1,11 @@
 import namespace from '../../utils'
 import exceed from 'utils/apimap'
+import { message } from 'antd'
 
 const NS = namespace()
 
 export const FETCH_EXAM_INFO = NS('FETCH_EXAM_INFO')
+export const UPDATE_EXAM_INFO = NS('UPDATE_EXAM_INFO')
 
 export function fetchExamInfo(id) {
   return dispatch => {
@@ -13,19 +15,23 @@ export function fetchExamInfo(id) {
         examinationId: id
       }
     }).then(res => {
+      if (!res.body) {
+        message.warn(res.message || '没有找到考试数据')
+        return
+      }
       if (res.code === 0) {
-        let { itemList, examName, examTeacherName, userExamStatus } = res.body
-        itemList = itemList.sort((a, b) => a.userExamItemIndex - b.userExamItemIndex).map(o => {
+        let { itemList } = res.body
+        itemList = itemList.map((o, index) => {
           let options = []
           switch (o.userExamItemType) {
             case '判断题':
               options = [
                 {
-                  label: '正确',
-                  value: 1
+                  label: '对',
+                  value: '对'
                 }, {
-                  label: '错误',
-                  value: 0
+                  label: '错',
+                  value: '错'
                 }
               ]
               break
@@ -48,14 +54,15 @@ export function fetchExamInfo(id) {
             reply: o.userExamItemReply,
             score: o.userExamItemScore,
             type: o.userExamItemType,
-            index: o.userExamItemIndex,
-            options
+            index: index + 1,
+            options,
+            answered: !!o.userExamItemReply
           }
         })
         dispatch({
           type: FETCH_EXAM_INFO,
           data: {
-            list: itemList, examName, examTeacherName, userExamStatus
+            ...res.body, list: itemList
           }
         })
       }
@@ -70,5 +77,19 @@ export function submitItem(id, reply) {
       userExamItemId: id,
       userExamItemReply: reply
     }
+  })
+}
+
+export function updateExamInfo(dataSource) {
+  return {
+    type: UPDATE_EXAM_INFO,
+    data: dataSource
+  }
+}
+
+export function endExam(data) {
+  return exceed.fetch({
+    api: 'endExam',
+    data
   })
 }

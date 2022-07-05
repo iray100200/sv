@@ -4,21 +4,40 @@
   &:not(:last-child) {
     margin-bottom: 16px;
   }
-  .ant-radio-group {
+  .ant-radio-group, .ant-checkbox-group {
     display: block;
   }
   .options {
-    line-height: 1.8;
     > li {
       list-style: none;
       margin: 8px 0 20px 0;
-      > .ant-radio-wrapper {
+      > .ant-radio-wrapper, > .ant-checkbox-wrapper {
+        line-height: 1.6;
+        > * {
+          pointer-events: none;
+        }
+        .ant-radio, .ant-checkbox {
+          display: none;
+        }
         background: #eee;
         padding: 6px 12px 6px 12px;
         border-radius: 16px;
         width: 100%;
-        &.ant-radio-wrapper-checked {
+        &.ant-radio-wrapper-checked, &.ant-checkbox-wrapper-checked {
           background: #7bbfea;
+          color: #fff;
+        }
+      }
+    }
+  }
+  &.wrong {
+    .options {
+      > li {
+        > .ant-radio-wrapper, > .ant-checkbox-wrapper {
+          &.ant-radio-wrapper-checked, &.ant-checkbox-wrapper-checked {
+            background: #F4606C;
+            color: #fff;
+          }
         }
       }
     }
@@ -41,7 +60,6 @@
   flex: 1;
   padding-right: 16px;
   overflow: auto;
-  height: 100vh;
 }
 
 .question-pagination {
@@ -65,8 +83,4 @@
   text-align: center;
   line-height: 62px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-.ant-radio {
-  display: none;
 }

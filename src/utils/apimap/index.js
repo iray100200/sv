@@ -1,9 +1,11 @@
 import Exceed from 'exceed'
-import Library from './library'
 import Courses from './courses'
 import Exam from './exam'
+import Videos from './videos'
+import Knowledge from './knowledge'
+import Admin from './admin'
 
-const LOCAL = `http://47.96.129.81:9091`
+const LOCAL = '/api'
 
 const exceed = new Exceed({
   csrf: false,
@@ -12,6 +14,14 @@ const exceed = new Exceed({
 })
 
 exceed.use([
+  {
+    id: 'fetchUserInfo',
+    method: 'get',
+    withToken: true,
+    urls: {
+      local: `${LOCAL}/f/v1/userinfo`
+    }
+  },
   {
     id: 'login',
     method: 'get',
@@ -44,16 +54,42 @@ exceed.use([
       local: `${LOCAL}/f/v1/forum`
     }
   },
-  ...Library,
+  {
+    id: 'updateForumData',
+    method: 'post',
+    withToken: true,
+    urls: {
+      local: `${LOCAL}/f/v1/forum`
+    }
+  },
+  {
+    id: 'fetchForumItemData',
+    method: 'get',
+    withToken: true,
+    urls: {
+      local: `${LOCAL}/f/v1/forum`
+    }
+  },
+  {
+    id: 'commentForumItem',
+    method: 'post',
+    withToken: true,
+    urls: {
+      local: `${LOCAL}/f/v1/comment`
+    }
+  },
   ...Courses,
-  ...Exam
+  ...Exam,
+  ...Videos,
+  ...Knowledge,
+  ...Admin
 ])
 
 exceed.interceptors.request.push((requestParams, config) => {
-  if (requestParams.withToken) {
+  if (requestParams.withToken === void(0) || requestParams.withToken) {
     requestParams.data = {
       ...requestParams.data,
-      token: localStorage.getItem('token')
+      token: window.token
     }
   }
 })

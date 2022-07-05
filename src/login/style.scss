@@ -1,20 +1,46 @@
 body {
-  background-image: url('/assets/login.bg.jpg');
+  background-image: url('https://oss-appearance-study-video2.oss-cn-hangzhou.aliyuncs.com/login_bg/login_bg_1920X1080.jpg');
   background-size: cover;
   overflow: hidden;
 }
 
+@media screen and (max-width: 1600px) {
+  body {
+    background-image: url('https://oss-appearance-study-video2.oss-cn-hangzhou.aliyuncs.com/login_bg/login_bg_1600X900.jpg');
+    background-size: cover;
+    overflow: hidden;
+  }
+}
+
+@media screen and (max-width: 1366px) {
+  body {
+    background-image: url('https://oss-appearance-study-video2.oss-cn-hangzhou.aliyuncs.com/login_bg/login_bg_1366X768.jpg');
+    background-size: cover;
+    overflow: hidden;
+  }
+}
+
+.logo-context {
+  height: 88px;
+  background: rgb(28, 120, 255);
+  padding: 16px 20px;
+}
+
 .login-card {
+  overflow: hidden;
   background: #fff;
-  width: 300px;
+  width: 320px;
   height: 400px;
   margin: 200px auto;
-  padding: 20px;
   background-image: linear-gradient(#fff, #f0f0f3);
   border-radius: 2px;
   h2 {
-    margin-top: 12px;
     color: #224b8f;
+  }
+  .content {
+    > * {
+      margin-bottom: 20px;
+    }
   }
 }
 

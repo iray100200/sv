@@ -1,55 +1,61 @@
-.book__container__document {
-  height: 100%;
-  .react-pdf {
-    &__Document {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    &__Page {
-      max-width: calc(~"100% - 40px");
-      box-shadow: 0 0 8px rgba(0, 0, 0, .5);
-      margin: 20px;
-      &~.react-pdf__Page {
-        margin-top: 0;
+.document-context {
+  font-size: initial;
+  background: rgb(82, 86, 89);
+  overflow: auto;
+  position: relative;
+  .book__container__document {
+    height: 100%;
+    .react-pdf {
+      &__Document {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
-
-      canvas {
-        max-width: 100%;
-        height: auto !important;
+  
+      &__Page {
+        max-width: calc(~"100% - 40px");
+        box-shadow: 0 0 8px rgba(0, 0, 0, .5);
+        margin: 20px;
+        &~.react-pdf__Page {
+          margin-top: 0;
+        }
+  
+        canvas {
+          max-width: 100%;
+          height: auto !important;
+        }
+      }
+  
+      &__message {
+        padding: 20px;
+        color: white;
       }
     }
-
-    &__message {
-      padding: 20px;
-      color: white;
+    &:hover {
+      .tool-bar {
+        opacity: 1;
+      }
     }
-  }
-  &:hover {
     .tool-bar {
-      opacity: 1;
-    }
-  }
-  .tool-bar {
-    position: fixed;
-    bottom: 40px;
-    right: 60px;
-    width: 36px;
-    opacity: 0.25;
-    transition: 0.3s opacity;
-    > i {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 36px;
-      font-size: 16px;
-      background: #ccc;
-      border-radius: 50%;
-      margin: 12px 0;
-      box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
-      color: #3c3645;
-      cursor: pointer;
+      position: fixed;
+      bottom: 40px;
+      right: 60px;
+      width: 36px;
+      opacity: 0.25;
+      transition: 0.3s opacity;
+      > i {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 36px;
+        font-size: 16px;
+        background: #ccc;
+        border-radius: 50%;
+        margin: 12px 0;
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+        color: #3c3645;
+        cursor: pointer;
+      }
     }
   }
 }

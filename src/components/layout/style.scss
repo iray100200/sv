@@ -7,10 +7,15 @@
   }
 }
 
+.ant-layout {
+  background: linear-gradient(#f8fafa, #fff);
+}
+
 .ant-layout-header {
   height: auto;
   width: 100%;
-  z-index: 99;                                                                                          line-height: 52px;
+  z-index: 99;
+  line-height: 52px;
   padding: 0;
   display: flex;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
@@ -41,6 +46,10 @@
     height: 52px;
     text-align: right;
     padding: 0 24px;
+    cursor: pointer;
+    &:hover {
+      background: rgba(100, 100, 100, 0.2);
+    }
     .head-photo {
       font-size: 20px;
       padding: 6px;
@@ -54,4 +63,24 @@
 .ant-layout-content {
   flex: 1;
   overflow: auto;
+}
+
+.drawer-head {
+  .user {
+    margin-top: 40px;
+    overflow: hidden;
+    padding: 2px;
+    border-radius: 50%;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+    .head-photo {
+      font-size: 64px;
+    }
+  }
+  > h4 {
+    margin-top: 16px;
+    max-width: 90%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 }

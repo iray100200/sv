@@ -20,10 +20,12 @@ export function fetchCourseCaegories() {
   })
 }
 
-export function fetchUserCourses(data) {
+export function fetchUserCourses(courseName = '') {
   return dispatch => exceed.fetch({
     api: 'fetchUserCourses',
-    data
+    data: {
+      courseName
+    }
   }).then(res => {
     if (res.code === 0) {
       dispatch({
@@ -34,9 +36,12 @@ export function fetchUserCourses(data) {
   })
 }
 
-export function fetchAllCourses() {
+export function fetchAllCourses(courseName = '') {
   return dispatch => exceed.fetch({
-    api: 'fetchAllCourses'
+    api: 'fetchAllCourses',
+    data: {
+      courseName
+    }
   }).then(res => {
     if (res.code === 0) {
       dispatch({
@@ -47,9 +52,12 @@ export function fetchAllCourses() {
   })
 }
 
-export function fetchLearningHistory() {
+export function fetchLearningHistory(courseName = '') {
   return dispatch => exceed.fetch({
-    api: 'fetchLearningHistory'
+    api: 'fetchLearningHistory',
+    data: {
+      courseName
+    }
   }).then(res => {
     if (res.code === 0) {
       dispatch({
@@ -57,5 +65,12 @@ export function fetchLearningHistory() {
         data: res.body
       })
     }
+  })
+}
+
+export function subscribeCourse(data) {
+  return exceed.fetch({
+    api: 'subscribeCourse',
+    data
   })
 }

@@ -1,4 +1,4 @@
-const LOCAL = `http://47.96.129.81:9091`
+const LOCAL = '/api'
 
 module.exports = [
   {
@@ -48,7 +48,28 @@ module.exports = [
     method: 'get',
     withToken: true,
     urls: {
-      local: `${LOCAL}/f/v1/usercourserecords`
+      local: `${LOCAL}/f/v1/usercourserecordslike`
+    }
+  }, {
+    id: 'fetchCourseDetail',
+    method: 'get',
+    withToken: true,
+    urls: {
+      local: `${LOCAL}/f/v1/coursedetail`
+    }
+  }, {
+    id: 'subscribeCourse',
+    method: 'post',
+    withToken: true,
+    urls: {
+      local: `${LOCAL}/f/v1/usercourse`
+    }
+  }, {
+    id: 'startCourse',
+    method: 'post',
+    withToken: true,
+    urls: {
+      local: `${LOCAL}/f/v1/userstartcourse`
     }
   }
 ]

@@ -5,10 +5,34 @@
   }
 }
 
-[aria-selected=false]:hover {
-  background: rgba(0, 0, 0, 0.1)
+[aria-selected=false] {
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .ant-table-body {
   overflow: auto!important;
+  td {
+    font-size: 13px;
+    color: #242635;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px;
+    > div {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.splitting {
+  font-size: 12px;
+  color: #a0abab;
+  position: relative;
+  top: -1px;
+  margin: 0 6px;
+}
+
+.ant-table-row-indent {
+  display: none;
 }

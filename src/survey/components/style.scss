@@ -5,6 +5,12 @@
 
 .sv_main .sv_container .sv_body .sv_progress .sv_progress_bar > span {
   top: -2em;
+  margin-left: 2px;
+}
+
+.sv_main .sv_container .sv_body {
+  border: 0;
+  padding: 20px 20px 50px;
 }
 
 .sv_main .sv_container .sv_header {
@@ -96,4 +102,39 @@
     text-align: center;
     height: 36px;
   }
+}
+
+.sv_main .sv_container .sv_body .sv_p_root table.sv_q_matrix td .sv_q_m_label {
+  height: 16px;
+}
+
+.sv_next_btn {
+  margin: 0!important;
+}
+
+.sv_main .sv_p_root>.sv_row:nth-child(2n) {
+  background: transparent;
+}
+
+.sv_q_radiogroup.sv-q-col-1 {
+  background: #e9e9ef;
+  padding: 2px 12px;
+  border-radius: 15px;
+  margin: 8px 0;
+  &.checked {
+    background: #7bbfea;
+    color: #fff;
+  }
+}
+
+.sv_q_text_root {
+  margin-top: 4px;
+  border-radius: 4px;
+  height: 36px!important;
+  transition: 0.3s all;
+}
+
+.sv_q_erbox {
+  border-radius: 4px;
+  padding: 6px 12px!important;
 }

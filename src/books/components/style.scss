@@ -7,7 +7,8 @@
   position: relative;
   .left-tree {
     padding: 20px 20px 24px 20px;
-    width: 280px;
+    min-width: 280px;
+    overflow: auto;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
     .ant-tree.ant-tree-directory {
       display: inline-block;
@@ -22,12 +23,6 @@
     input {
       padding-left: 16px;
     }
-  }
-  .document-context {
-    font-size: initial;
-    background: rgb(82, 86, 89);
-    overflow: auto;
-    position: relative;
   }
 }
 
@@ -54,6 +49,25 @@
   height: auto;
 }
 
+.ant-tree-title {
+  font-size: 10pt;
+  padding-right: 8px;
+}
+
 .ant-tree > li:first-child {
   padding: 0;
+}
+
+.ant-tree-node-content-wrapper {
+  position: relative;
+}
+
+.ant-tree-node-selected {
+  a {
+    color: #fff;
+  }
+}
+
+.ant-select-dropdown-menu-item-group-title {
+  white-space: nowrap;
 }

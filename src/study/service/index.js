@@ -25,3 +25,16 @@ export function importLibrary(data) {
     })
   })
 }
+
+export function startCourse(data) {
+  return new Promise((resolve, reject) => [
+    exceed.fetch({
+      api: 'startCourse',
+      data
+    }).then(res => {
+      if (res.success) {
+        resolve(res.data)
+      }
+    })
+  ])
+}

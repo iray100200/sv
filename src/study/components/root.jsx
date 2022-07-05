@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import Layout from 'components/layout'
-import { Card, Tabs, Table, Progress, Input } from 'antd'
+import { Card, Tabs, Table, Progress, Input, Icon, Tag, Spin } from 'antd'
 import moment from 'moment'
-import ApplyCourse from './apply'
+import PageHeader from 'components/head'
+import MyCourse from './myCourse'
+import CourseSelect from './courseSelect'
+
 import './style.scss'
-import { courses, mycourses, allcourses } from '../mock'
 
 const breadcrumb = [
   {
@@ -15,94 +17,97 @@ const breadcrumb = [
 ]
 
 class Root extends Component {
+  state = {
+    loading1: true,
+    loading2: true,
+    loading3: true
+  }
   componentDidMount() {
     let { dispatch } = this.props
-    dispatch(actions.fetchCourseCaegories())
-    dispatch(actions.fetchUserCourses())
-    dispatch(actions.fetchAllCourses())
-    dispatch(actions.fetchLearningHistory())
+    dispatch(actions.fetchUserCourses()).then(() => {
+      this.setState({
+        loading1: false
+      })
+    })
+    dispatch(actions.fetchAllCourses()).then(() => {
+      this.setState({
+        loading2: false
+      })
+    })
+    dispatch(actions.fetchLearningHistory()).then(() => {
+      this.setState({
+        loading3: false
+      })
+    })
   }
-  viewDetail = obj => () => {
-
+  handleSearchMyCourse = (val) => {
+    this.props.dispatch(actions.fetchUserCourses(val))
+  }
+  handleSearchHistory = (val) => {
+    this.props.dispatch(actions.fetchLearningHistory(val))
+  }
+  handleSearchCourse = (val) => {
+    this.props.dispatch(actions.fetchAllCourses(val))
+  }
+  handleSubscribeSuccess = () => {
+    this.props.dispatch(actions.fetchAllCourses())
+  }
+  get tab3() {
+    const { history } = this.props
+    const sorter = (key) => (a, b) => String(a[key]).localeCompare(String(b[key]))
+    return <div>
+      <span>
+        <Input.Search
+          style={{ marginBottom: 20, width: 280 }}
+          placeholder="搜索：请输入课程名"
+          onSearch={this.handleSearchHistory}
+          enterButton
+          allowClear
+        />
+      </span>
+      <Table bordered pagination scroll={{ x: 'max-content' }} size="small" dataSource={history.list}>
+        <Table.Column sorter={sorter('backup01')} width={240} title="课程名称" dataIndex="backup01" />
+        <Table.Column sorter={sorter('userCourseRecordStarttime')} width={150} title="学习开始时间" dataIndex="userCourseRecordStarttime" render={(v) => {
+          return v && <Tag color="blue">{moment(v).format('YYYY-MM-DD HH:mm:ss')}</Tag>
+        }} />
+        <Table.Column sorter={sorter('userCourseRecordEndtime')} width={150} title="学习结束时间" dataIndex="userCourseRecordEndtime" render={(v) => {
+          return v && <Tag color="blue">{moment(v).format('YYYY-MM-DD HH:mm:ss')}</Tag>
+        }} />
+        <Table.Column sorter={sorter('updateDate')} width={150} title="上次更新时间" dataIndex="updateDate" render={(v) => {
+          return v && <Tag color="blue">{moment(v).format('YYYY-MM-DD HH:mm:ss')}</Tag>
+        }} />
+        <Table.Column sorter={sorter('userCourseRecordStatus')} width={120} dataIndex="userCourseRecordStatus" title="学习状态" render={v => {
+          return v && <Tag color="blue">{v}</Tag>
+        }} />
+        <Table.Column sorter={sorter('userCourseRecordNumberProgress')} width={160} title="当前学习进度" dataIndex="userCourseRecordNumberProgress" render={(v) => {
+          return <Progress percent={Math.round(Number(v) * 100)} />
+        }} />
+        <Table.Column sorter={sorter('userCourseRecordNumber')} width={100} align="center" title="已学次数" dataIndex="userCourseRecordNumber" render={v => {
+          return v && <Tag color="blue">{v}</Tag>
+        }} />
+      </Table>
+    </div>
   }
   render() {
-    const { allCourses } = this.props
-    return <Layout current="study" breadcrumb={ breadcrumb }>
-      <Card title="在线学习">
-        <Tabs style={ { marginLeft: -12 } } type="line" tabPosition="left">
-          <Tabs.TabPane tab={ <h4>我的课程</h4> } key="1">
-            <span>
-              <Input.Search
-                style={ { marginBottom: 20, width: 280 } }
-                placeholder="搜索：请输入课程名"
-                onSearch={ value => console.log(value) }
-                enterButton
-              />
-            </span>
-            <Table size="small" pagination={ false } className="auto" dataSource={ courses }>
-              <Table.Column key="0" width={ 400 } title="课程名称" dataIndex="name" />
-              <Table.Column key="1" width={ 200 } title="截至日期" dataIndex="deadline" render={ (v) => {
-                return moment(v).format('YYYY-MM-DD')
-              } } />
-              <Table.Column key="2" width={ 200 } title="进度" dataIndex="percent" render={ (v) => {
-                return <Progress percent={ v * 100 } />
-              } } />
-              <Table.Column key="3" width={ 100 } align="right" render={ (v, record, index) => {
-                return <a>开始学习</a>
-              } } />
-            </Table>
+    const loading = <div style={{ textAlign: "center" }}>
+      <Spin tip="加载中">
+        <Table size="small" />
+      </Spin>
+    </div>
+    const { loading1, loading2, loading3 } = this.state
+    const { allCourses, myCourses } = this.props
+    return <Layout current="study" breadcrumb={breadcrumb} fullScreen>
+      <PageHeader onBack={() => null} backIcon={<Icon type="home" style={{ fontSize: 16, color: 'rgba(0,0,0,.65)' }} />} title="学习中心" />
+      <Card>
+        <Tabs style={{ marginLeft: 0 }} type="line" tabPosition="left">
+          <Tabs.TabPane tab={<h4>我的课程</h4>} key="1">
+            {!loading1 ? <MyCourse dataSource={myCourses.list} onSearch={this.handleSearchMyCourse} /> : loading}
           </Tabs.TabPane>
-          <Tabs.TabPane tab={ <h4>选课中心</h4> } key="2">
-            <span>
-              <Input.Search
-                style={ { marginBottom: 20, width: 280 } }
-                placeholder="搜索：请输入课程名"
-                onSearch={ value => console.log(value) }
-                enterButton
-              />
-            </span>
-            <Table scroll={ { x: 'max-content' } } size="small" dataSource={ allCourses.list }>
-              <Table.Column key="0" width={ 140 } title="课程名称" dataIndex="courseName" render={ (v, o) => {
-                return <a onClick={ this.viewDetail(o) }>{ v }</a>
-              } } />
-              <Table.Column key="2" width={ 140 } title="课程类型" dataIndex="courseCategoryName" />
-              <Table.Column key="3" width={ 120 } title="讲师" dataIndex="courseTeacher" />
-              <Table.Column key="4" width={ 100 } title="学时" dataIndex="coursePeriod" render={ v => v && v + ' 小时' } />
-              <Table.Column key="5" width={ 100 } title="学分" dataIndex="courseCredit" render={ v => v && v + ' 分' } />
-              <Table.Column key="6" width={ 220 } title="课程介绍" dataIndex="courseIntroduce" />
-              <Table.Column key="6" width={ 120 } title="状态" dataIndex="userCourseLearnStatus" />
-              <Table.Column key="7" width={ 80 } title="操作" dataIndex="seq" render={ v => {
-                return <ApplyCourse>
-                  <a>申请</a>
-                </ApplyCourse>
-              } } />
-            </Table>
+          <Tabs.TabPane tab={<h4>选课中心</h4>} key="2">
+            {!loading2 ? <CourseSelect dataSource={allCourses.list} onSearch={this.handleSearchCourse} /> : loading}
           </Tabs.TabPane>
-          <Tabs.TabPane tab={ <h4>学习档案</h4> } key="3">
-            <span>
-              <Input.Search
-                style={ { marginBottom: 20, width: 280 } }
-                placeholder="搜索：请输入课程名"
-                onSearch={ value => console.log(value) }
-                enterButton
-              />
-            </span>
-            <Table size="small" pagination={ false } className="auto" dataSource={ mycourses }>
-              <Table.Column width={ 400 } title="课程名称" dataIndex="name" />
-              <Table.Column width={ 150 } title="课时" dataIndex="hours" render={ (v) => {
-                return v + ' 小时'
-              } } />
-              <Table.Column width={ 150 } title="已学时间" dataIndex="hours" render={ (v, r, i) => {
-                return Math.round(r.hours * r.percent * 100) / 100 + ' 小时'
-              } } />
-              <Table.Column width={ 200 } title="进度" dataIndex="percent" render={ (v) => {
-                return <Progress percent={ v * 100 } />
-              } } />
-              <Table.Column width={ 100 } align="center" title="次数" dataIndex="times" />
-              <Table.Column width={ 100 } title="操作" render={ (v) => {
-                return <a>学习履历</a>
-              } } />
-            </Table>
+          <Tabs.TabPane tab={<h4>学习档案</h4>} key="3">
+            {!loading3 ? this.tab3 : loading}
           </Tabs.TabPane>
         </Tabs>
       </Card>
